@@ -1,5 +1,8 @@
-#stdout-example
+# stdout-example
+
 Simple example: [benthos](https://github.com/Jeffail/benthos) and [subprocess](https://www.benthos.dev/docs/components/inputs/subprocess) 
 
-#How to run:
-    make run-all
+## How to run:
+```shell
+ make run-all
+```
