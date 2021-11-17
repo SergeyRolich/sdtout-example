@@ -1,0 +1,12 @@
+input:
+  subprocess:
+    name: ./stdout-app
+    codec: lines
+    restart_on_exit: false
+
+pipeline:
+  processors:
+    - resource: check_is_valid_json
+
+output:
+  resource: drop_json

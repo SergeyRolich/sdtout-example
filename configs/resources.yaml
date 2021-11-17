@@ -1,0 +1,37 @@
+resources:
+  processors:
+    drop_message:
+      bloblang: |
+        root = deleted()
+
+    log_invalid_json:
+      log:
+        level: ERROR
+        message: 'Not valid json, will be dropped'
+        fields:
+          error_type: 'NOT_VALID_JSON'
+          content: '${! content().string() }'
+
+    log_json:
+      log:
+        level: INFO
+        message: 'msg'
+        fields:
+          content: '${! content().string() }'
+
+    check_is_valid_json:
+      switch:
+        - check: content().string().parse_json().catch({}).length() == 0
+          processors:
+            - for_each:
+                - resource: log_invalid_json
+                - resource: drop_message
+
+
+  outputs:
+    print_json:
+      stdout:
+        codec: lines
+
+    drop_json:
+      drop: {}
